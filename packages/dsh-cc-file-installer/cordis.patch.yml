@@ -1,0 +1,4 @@
+# dsh-cc-file-installer bundle patch — self-insert row (host-only)
+- insert:
+    - id: cc-file-installer
+      name: 'dsh-cc-file-installer'

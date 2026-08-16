@@ -1,0 +1,4 @@
+# dsh-cc-market bundle patch — self-insert row (host + client)
+- insert:
+    - id: cc-market
+      name: 'dsh-cc-market'

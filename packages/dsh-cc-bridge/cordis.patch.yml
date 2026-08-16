@@ -1,0 +1,4 @@
+# dsh-cc-bridge bundle patch — self-insert row (host-only)
+- insert:
+    - id: cc-bridge
+      name: 'dsh-cc-bridge'

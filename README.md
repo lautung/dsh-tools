@@ -48,6 +48,10 @@ WebUI 设置页「CC插件市场」：市场列表（插件名/描述/分类/作
 
 ## 在 DSH 中加载
 
+两种方式，二选一：
+
+### 方式 A：动态加载（进程级，重启后需重新激活）
+
 源码文件是 `cordis_define` 的 `code.host` / `code.client` 函数体，原样粘贴即可：
 
 ```text
@@ -56,6 +60,27 @@ cordis_define(plugin: {kind: "new", idPrefix: "ccxx"}, name: ..., purpose: ...,
 ```
 
 然后 `cordis_run` 激活（带 client 的包需浏览器审批）。
+
+### 方式 B：包插件持久安装（推荐，重启后仍在）
+
+`packages/` 下是与 `plugins/` 同源的 npm 包形态（`scripts/build-packages.mjs` 自动生成），
+host 代码经 harness 垫片桥接到包插件 API（`ctx.tools.register` / `defineTool`），
+cc-market 的 `cm.*` RPC 改为 `ctx.webServer` HTTP 路由（`/api/cc-market/*`），
+client 的 `host.call` 改为 `fetch`，可在 Web 设置页「CC插件市场」直接管理。
+
+```bash
+# 1. 构建包（若 packages/ 缺失或源码有更新）
+node scripts/build-packages.mjs
+
+# 2. 官方 CLI 安装到 web profile（等价于 pnpm add link:，自动进 bundles 层）
+dsh plugin --profile web add link:$(pwd)/packages/dsh-cc-bridge
+dsh plugin --profile web add link:$(pwd)/packages/dsh-cc-market
+
+# 3. 重启 dsh web 生效
+```
+
+> 注意：包内 import 仅 `@deepseek-ai/dsh-tools`（profile 模块回退目录 `$DSH_HOME/profiles/node_modules`
+> 提供）；若从源码目录直接运行请勿用软链（Node 按真实路径解析会找不到依赖），拷贝或 `link:` 安装均可。
 
 ## 默认市场
 

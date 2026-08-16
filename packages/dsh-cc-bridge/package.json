@@ -1,0 +1,17 @@
+{
+  "name": "dsh-cc-bridge",
+  "version": "1.0.0",
+  "description": "Claude Code Bridge (dsh-tools cc-bridge) — persistent DSH package build",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "license": "MIT"
+}
