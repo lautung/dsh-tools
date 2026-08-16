@@ -1,0 +1,26 @@
+{
+  "id": "ccode-1",
+  "name": "Claude Code Bridge",
+  "version": "pkg-19",
+  "platform": "host-only",
+  "purpose": "桥接 Claude Code 插件体系到 DSH：读取 Claude 插件声明（plugin.json / SKILL.md / marketplace.json），翻译为 DSH 原生技能注册、harness 工具与 tools/pre-execute、tools/post-execute 事件瀑布；MCP 服务器经自研 stdio JSON-RPC 客户端懒加载并注册为 ccmcp-* 工具。",
+  "inject": ["subprocess", "sandboxPolicy", "timer", "skills"],
+  "provides": ["claudeCode"],
+  "tools": [
+    "ccplugin_marketplaces", "ccplugin_search", "ccplugin_list", "ccplugin_details",
+    "ccplugin_install", "ccplugin_toggle", "ccplugin_manage",
+    "ccplugin_run_skill", "ccbridge_list",
+    "ccmcp_list", "ccmcp_refresh",
+    "claude_code_run", "claude_code_status"
+  ],
+  "handlers": [
+    "cc.bootstrap", "cc.bridgeList", "cc.details", "cc.install",
+    "cc.manage", "cc.mcpList", "cc.runSkill", "cc.search", "cc.toggle"
+  ],
+  "events": ["tools/pre-execute", "tools/post-execute", "agent/session-start", "agent/disposed"],
+  "notes": [
+    "host.js 即 cordis_define 的 code.host 函数体（纯 JavaScript，无构建）",
+    "本版本（pkg-19）为 DSH-owned：CLAUDE 侧（~/.claude）仅通过显式 ccplugin_* 工具按用户要求读写",
+    "技能桥接注册默认禁用（ccbridge_list 仅列出不注册）"
+  ]
+}

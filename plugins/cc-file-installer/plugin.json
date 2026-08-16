@@ -1,0 +1,19 @@
+{
+  "id": "ccfi-3",
+  "name": "CC File Installer",
+  "version": "pkg-20",
+  "platform": "host-only",
+  "purpose": "以纯文件方式管理 Claude Code 插件市场与插件安装，完全独立于 ~/.claude：市场经 git clone / 本地复制落入 ~/.dsh/ccbridge/plugins/marketplaces，插件按 manifest 解析后落入 cache 并记账于 installed_plugins.json，全部操作通过 subprocess 执行 /bin/* 命令，不调用 claude CLI。",
+  "inject": ["subprocess", "sandboxPolicy", "timer"],
+  "tools": [
+    "ccmarket_file",
+    "ccinstall_file",
+    "ccuninstall_file",
+    "ccrescan_skills"
+  ],
+  "notes": [
+    "host.js 即 cordis_define 的 code.host 函数体（纯 JavaScript，无构建）",
+    "ok 语义约定：spawnCli 的 ok 仅表示进程跑完，所有成功判断必须用 exitCode === 0（ok0 helper）",
+    "DSH 目录布局：~/.dsh/ccbridge/plugins/{installed_plugins.json, known_marketplaces.json, marketplaces/<name>/, cache/<market>/<plugin>/<ver>/}"
+  ]
+}

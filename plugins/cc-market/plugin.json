@@ -1,0 +1,19 @@
+{
+  "id": "cmar-4",
+  "name": "CC插件市场 (CC Plugin Market)",
+  "version": "pkg-21",
+  "platform": "host + client",
+  "purpose": "WebUI 设置页管理 Claude Code 插件：市场列表（插件名/描述/分类/作者/安装状态）、筛选搜索、安装/升级/卸载、添加/更新/移除市场、刷新技能目录。宿主复用 ccfi-3 的文件引擎（ok0 + mkdirP 语义），客户端注入设置页 slot settings.section（id: plugin-market，label: CC插件市场）。",
+  "inject": ["subprocess", "sandboxPolicy", "timer"],
+  "handlers": ["cm.list", "cm.install", "cm.upgrade", "cm.uninstall", "cm.market", "cm.rescan"],
+  "client": {
+    "slot": "settings.section",
+    "slotId": "plugin-market",
+    "label": "CC插件市场",
+    "react": "React.createElement only（无 JSX），host.call 走 cm.* 私有方法"
+  },
+  "notes": [
+    "host.js / client.js 即 cordis_define 的 code.host / code.client 函数体（纯 JavaScript，无构建）",
+    "数据源为 ~/.dsh/ccbridge/plugins（DSH-owned），绝不写 ~/.claude"
+  ]
+}
