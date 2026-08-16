@@ -57,6 +57,15 @@ cordis_define(plugin: {kind: "new", idPrefix: "ccxx"}, name: ..., purpose: ...,
 
 然后 `cordis_run` 激活（带 client 的包需浏览器审批）。
 
+## 默认市场
+
+`defaults/known_marketplaces.json` 是首次使用时的推荐市场清单（官方市场）。市场页/工具在 `~/.dsh/ccbridge/plugins/known_marketplaces.json` 为空时，先按该清单初始化：
+
+```bash
+# 手动方式：在 CC插件市场 页面的「添加市场」框输入 owner/repo
+anthropics/claude-plugins-official
+```
+
 ## 目录约定
 
 - 所有数据落 `~/.dsh/ccbridge/plugins`，权限敏感文件（如 SSH 配置）不在本仓库

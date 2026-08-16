@@ -1,0 +1,10 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "~/.dsh/ccbridge/plugins/marketplaces/claude-plugins-official",
+    "description": "Claude Code 官方插件市场（286 个插件）"
+  }
+}
